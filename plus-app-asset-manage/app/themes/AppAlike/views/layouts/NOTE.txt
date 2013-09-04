@@ -1,0 +1,2 @@
+edit footer : block out plus-menu
+add header: insert slide-menu instead of plus-menu

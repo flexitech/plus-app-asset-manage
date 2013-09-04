@@ -1,0 +1,110 @@
+<div class="jira-content" style="width:100%; height:100%;">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8" style="position:relative; height:100%;">
+		<div id="billingPlanInfo-wrap-wrapper" class="billingPlanInfo-wrap-wrapper" style="position:absolute;overflow-y:scroll;bottom:0px;left:0px;top:0px;width:100%;" >
+			<div id="scroller" style="position:absolute;width:100%;">
+				<!--<div class="panel-group" style="height:auto; width:98%;" >-->
+				<div class="" style="padding:5px; max-width:480px;margin:0px auto;">
+					<div class="panel panel-default" style=""  >
+						<div class="panel-heading">
+							<h3 class="panel-title" style=""><span style="text-transform:capitalize">create</span> Invoice</h3>
+						</div>
+						
+						<div class="panel-body container" style="min-height:240px">
+							<form class="form" name="formInvoiceInfo" novalidate>
+								<div class="row form-group">
+
+									<div class="col-md-12">
+										<label class="control-label ">Invoice for {{invoice.bill.plan_name}} - {{invoice.bill.due_date}}
+										</label>
+									</div>
+								</div>
+								<div class="row form-group">
+
+									<div class="col-md-12">
+										<label for="txtNote" class="control-label  visible-md">Note
+										</label>
+									</div>
+									<div class="col-md-12">
+										
+										<textarea placeholder="Note. Ex: Electricity 2-6" ng-model="invoice.note" id="txtNote" class="form-control" rows="3"></textarea>
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<table class="table-striped" style="width:100%;">
+											<thead>
+												<tr>
+													<td>Price List</td>
+													<td>New Quantity</td>
+													<td>Quantity</td>
+													<td>Amount</td>
+												<tr/>
+											</thead>
+											<tbody>
+												<tr ng-repeat="pricing_list in invoice.pricing_list">
+													<td>{{pricing_list.pricing_name}}</td>
+													<td><input type="number" class="form-control" ng-model="pricing_list.qty" required /></td>
+													<td>{{pricing_list.getQuantity()}} {{pricing_list.unit}}</td>
+													<td>{{pricing_list.getAmountStr()}}</td>
+												</tr>
+												<tr ng-show="invoice.pricing_list.length>0">
+													
+													<td>Total Amount:</td>
+													<td>{{getTotalAmount()}}</td>
+													<td></td>
+													<td></td>
+												</tr>
+												<tr ng-show="invoice.pricing_list.length<=0">
+													<td>No Data</td>
+													<td>No Data</td>
+													<td>No Data</td>
+													<td>No Data</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="row form-group">
+
+									<div class="col-md-12">
+										<label for="txtCreatedDate" class="control-label  visible-md">Created Date:
+										</label>
+									</div>
+									<div class="col-md-12">
+										
+										<input type="date" placeholder="Created Date" ng-model="invoice.created_date" id="txtCreatedDate" class="form-control" />
+									</div>
+								</div>
+								<div class="row form-group">						
+									<div class="col-xs-6  col-sm-6 col-md-6">
+										<button ng-disabled="formInvoiceInfo.$invalid" style="width:100%" class="btn btn-warning" ng-click="createInvoice(invoice)">
+											<span style="text-transform:capitalize">create</span> Invoice
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="panel-footer">Asset Management System</div>
+					</div>
+				</div>
+				<!--</div>-->
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	setTimeout(function(){
+		console.log("hey u there!!");
+		var myScroll = new iScroll($('.billingPlanInfo-wrap-wrapper')[0],{useObject:true});
+		myScroll.options.onBeforeScrollStart = function(e) {                
+	        var target = e.target;
+
+	        while (target.nodeType != 1) target = target.parentNode;
+
+	        if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
+	            e.preventDefault();
+	        }
+	    }
+		setInterval(function(){myScroll.refresh()},1000);
+	},300);
+</script>

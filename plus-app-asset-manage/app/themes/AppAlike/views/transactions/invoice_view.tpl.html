@@ -1,0 +1,104 @@
+<div class="jira-content" style="width:100%; height:100%;">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8" style="position:relative; height:100%;">
+		<div id="billingPlanInfo-wrap-wrapper" class="billingPlanInfo-wrap-wrapper" style="position:absolute;overflow-y:scroll;bottom:0px;left:0px;top:0px;width:100%;" >
+			<div id="scroller" style="position:absolute;width:100%;">
+				<!--<div class="panel-group" style="height:auto; width:98%;" >-->
+				<div class="" style="padding:5px; max-width:480px;margin:0px auto;">
+					<div class="panel panel-default" style=""  >
+						<div class="panel-heading">
+							<h3 class="panel-title" style=""><span style="text-transform:capitalize">view</span> Invoice</h3>
+						</div>
+						
+						<div class="panel-body container" style="min-height:240px">
+							<form class="form" name="formBillingPlan" novalidate>
+								<div class="row form-group">
+
+									<div class="col-md-12">
+										<label class="control-label ">Invoice #{{invoice.ID}} for {{invoice.getBillingName()}}
+										</label>
+									</div>
+								</div>
+								<div class="row form-group">
+
+									<div class="col-md-12">
+										<label for="txtNote" class="control-label  visible-md">Note
+										</label>
+									</div>
+									<div class="col-md-12">
+										
+										{{invoice.note}}
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<table class="table-striped" style="width:100%;">
+											<thead>
+												<tr>
+													<td>Price List</td>
+													<td>Old - New Quantity</td>
+													<td>Quantity</td>
+													<td>Amount</td>
+												<tr/>
+											</thead>
+											<tbody>
+												<tr ng-repeat="detail in invoice.detail">
+													<td>{{detail.pricing_name}}</td>
+													<td>{{detail.old_qty}} - {{detail.new_qty}}</td>
+													<td>{{detail.qty}} {{detail.unit}}</td>
+													<td>{{detail.currency}} {{detail.amount}} </td>
+												</tr>
+												<tr ng-show="invoice.detail.length>0">
+													
+													<td>Total Amount:</td>
+													<td>{{getTotalAmount()}}</td>
+													<td></td>
+													<td></td>
+												</tr>
+												<tr ng-show="invoice.detail.length<=0">
+													<td>No Data</td>
+													<td>No Data</td>
+													<td>No Data</td>
+													<td>No Data</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="row form-group">
+
+									<div class="col-md-12">
+										<label for="txtCreatedDate" class="control-label  visible-md">Created Date:
+										</label>
+									</div>
+									<div class="col-md-12">
+										
+										{{invoice.created_date }}
+									</div>
+								</div>
+								
+							</form>
+						</div>
+						<div class="panel-footer">Asset Management System</div>
+					</div>
+				</div>
+				<!--</div>-->
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	setTimeout(function(){
+		console.log("hey u there!!");
+		var myScroll = new iScroll($('.billingPlanInfo-wrap-wrapper')[0],{useObject:true});
+		myScroll.options.onBeforeScrollStart = function(e) {                
+	        var target = e.target;
+
+	        while (target.nodeType != 1) target = target.parentNode;
+
+	        if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
+	            e.preventDefault();
+	        }
+	    }
+		setInterval(function(){myScroll.refresh()},1000);
+	},300);
+</script>

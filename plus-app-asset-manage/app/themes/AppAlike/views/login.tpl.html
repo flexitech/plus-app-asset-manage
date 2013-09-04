@@ -1,0 +1,52 @@
+<div class="kratos">
+
+	<div class="panel-group" style="" >
+		<div class="panel panel-default" >
+			<div class="panel-heading">
+				<h3 class="panel-title" style="">Log In</h3>
+			</div>
+			<div class="panel-body container" style="min-height:240px">
+				<form class="form">
+					<div class="row form-group">
+
+						<div class="col-md-6">
+							<label for="txtUsername" class="control-label visible-md">Username
+							</label>
+						</div>
+						<div class="col-md-6">
+							<input type="text" class="form-control" id="txtUsername" ng-model="logininfo.username"
+							placeholder="Ex: npsopeak"
+							/>
+						</div>
+					</div>
+					<div class="row form-group">
+
+						<div class="col-md-6">
+							<label for="txtPassword" class="control-label  visible-md">Password
+							</label>
+						</div>
+						<div class="col-md-6">
+							<input type="password" class="form-control" id="txtPassword" ng-model="logininfo.password"
+							placeholder= 'Ex: 21jkjd834D'
+							/>
+						</div>
+					</div>
+					
+					<div class="row form-group">						
+						<div class="col-xs-6  col-sm-6 col-md-6">
+							<button style="width:100%" class="btn btn-warning" ng-click="login(logininfo)">
+								Log In
+							</buttn>
+						</div>
+						<div class="col-xs-6  col-sm-6 col-md-6">
+							<button style="width:100%" class="btn btn-info" hm-tap="$navigate.go('startup','slide')">
+								Register
+							</buttn>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="panel-footer">Asset Management System</div>
+		</div>
+	</div>
+</div>

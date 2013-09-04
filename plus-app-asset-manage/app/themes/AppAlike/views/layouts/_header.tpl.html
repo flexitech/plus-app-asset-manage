@@ -1,0 +1,114 @@
+<div ng-controller="LayoutHeaderController" >
+	<div class="navbar-inner"  >
+		<div class="container-fluid"  hm-drag-down="showSearch('.search-box button');" hm-swipe-left="hide('.button-back');" hm-swipe-right="show('.button-back');checkUserLogin();">
+			
+				<button hm-tap="checkUserLogin();" data-cur="hide" id="button-back" class="button-back button-nav-bar back btn "><span class="glyphicon glyphicon-list"></span> Menu</button>
+				<span class="pnavbar-brand" href="#">{{pageTitle}}</span>
+				<span id="button-menu-group-right" ng-show="getMethodHandler().show">
+					<button id="" class="button-nav-bar blue btn go " hm-tap="getMethodHandler().func();">{{getMethodHandler().text}} <span ng-class="getMethodHandler().icon_class"></span>
+					</button>
+				</span>
+		</div>
+			
+			
+		 
+		    
+		   
+			
+	</div>
+	<div class="clear"></div>
+	<div class="search-box " style="">
+		<input type="text" style="" placeholder="Search" ng-change="getSearchBarHandler().onSubmit()" ng-model="getSearchBarHandler().searchText"/><button data-cur="hide" class="btn btn-info">X</button>
+	</div>
+</div>
+<ng-include src="app.paths.element('plus.ui')"></ng-include>
+<script>
+	//$(document).ready(function(){
+	var btnCloseSearch = $(".search-box button");
+	var searchBox = $(".search-box");
+	var sT = true;
+	btnCloseSearch.click(function(){
+		console.log("he call click");
+		if (sT){
+			searchBox.removeClass("end-search");
+			searchBox.addClass("drop-search");
+			btnCloseSearch.attr("data-cur","show");
+			sT=false;
+		}
+		else{
+			sT=true;
+			searchBox.removeClass("drop-search");
+			searchBox.addClass("end-search");btnCloseSearch.attr("data-cur","hide");
+		}
+	});
+
+	var t=true;
+	var btnBack=$('.button-back');
+	var wholePageWrapper=$(".wholePage #wrapper");
+	var wholePage=$(".wholePage");
+	var wholePageFooter=$(".wholePage footer");
+	var wholePageHeader=$(".wholePage header");
+	var navPage=$(".navPage");
+
+	btnBack.click(function(){
+	
+		if (t){
+			/*$("#wholePage header").animate({left:"250px"},500);
+			$("#wholePage footer").animate({left:"250px"},500);
+			$("#wholePage").animate({left:"250px"},500);
+			
+			$("#navPage").animate({left:"0px"},500);*/
+			/*wholePageHeader.removeClass("inWholePage");
+			$("#wholePage footer").removeClass("inWholePage");
+			$("#wholePage").removeClass("inWholePage");
+			$("#navPage").removeClass("outNavPage");
+			*/
+			wholePageHeader.removeClass("inWholePage");
+			wholePageFooter.removeClass("inWholePage");
+			wholePageWrapper.removeClass("inWholePage");
+			/*wholePage.removeClass("inWholePage");*/
+			navPage.removeClass("outNavPage");
+			
+			wholePageHeader.addClass("outWholePage");
+			wholePageFooter.addClass("outWholePage");
+			wholePageWrapper.addClass("outWholePage");
+			/*wholePage.addClass("outWholePage");*/
+			navPage.addClass("inNavPage");
+			t=false;
+			var myScroll = new iScroll($('.navPage-wrap-wrapper')[0],{
+				momentum: false,useObject:true});
+			setTimeout(function(){myScroll.refresh()},1000);
+			t=false;
+			
+			$(this).attr("data-cur","show");
+		}
+		else{
+				/*$("#wholePage header").animate({left:"0px"},500);
+				$("#wholePage footer").animate({left:"0px"},500);
+				$("#wholePage").animate({left:"0px"},500);
+				$("#navPage").animate({left:"-250px"},500);
+				t=true;*/
+				
+				/*$("#wholePage header").removeClass("outWholePage");
+				$("#wholePage footer").removeClass("outWholePage");
+				$("#wholePage").removeClass("outWholePage");
+				$("#navPage").removeClass("inNavPage");*/
+				wholePageHeader.removeClass("outWholePage");
+				wholePageFooter.removeClass("outWholePage");
+				/*wholePage.removeClass("outWholePage");*/
+				wholePageWrapper.removeClass("outWholePage");
+				navPage.removeClass("inNavPage");
+				
+				
+				wholePageHeader.addClass("inWholePage");
+				wholePageFooter.addClass("inWholePage");
+				/*wholePage.addClass("inWholePage");*/
+				wholePageWrapper.addClass("inWholePage");
+				navPage.addClass("outNavPage");
+				$(this).attr("data-cur","hide");
+				t=true;
+		}
+	});
+	
+	//});
+</script>

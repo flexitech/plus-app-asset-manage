@@ -1,0 +1,171 @@
+<div class="kratos">
+	<div class="panel-group" style="" >
+		<!--<div class="root"></div>
+		<div class="edge"></div>-->
+		<div class="image-show-next">
+			<span class="glyphicon glyphicon-circle-arrow-right"></span>
+		</div>
+		<div class="parent-horiz"  id="horiz-wrapper">
+			<div id="scroller" class="scroller-horiz" >
+				<!-- div : intro -->
+				<div class="panel panel-default"  ng-hide="isformRegisterDone()">
+					<div class="panel-heading">
+						<h3 class="panel-title" style="">Welcome to Asset Management System</h3>
+					</div>
+					<div class="panel-body" style="min-height:240px">
+						Great Start!
+						<br/>
+						Swipe this to the right!
+					</div>
+					<div class="panel-footer">By npsopeak</div>
+				</div>
+				<!-- div : sign up -->
+				<div class="panel panel-default" ng-hide="isformRegisterDone()">
+					<div class="panel-heading">
+						<h3 class="panel-title" style="">Sign Up</h3>
+					</div>
+					<div class="panel-body container" style="min-height:240px">
+						<form class="form" name="form"  novalidate>
+							<div class="row form-group">
+
+								<div class="col-md-6">
+									<label for="txtUsername" class="control-label visible-md">Username
+									</label>
+								</div>
+								<div class="col-md-6">
+									<input type="text" class="form-control" id="txtUsername" ng-model="registerinfo.username" required
+									placeholder="Ex: npsopeak"
+									/>
+								</div>
+							</div>
+							<div class="row form-group">
+
+								<div class="col-md-6">
+									<label for="txtPassword" class="control-label  visible-md">Password
+									</label>
+								</div>
+								<div class="col-md-6">
+									<input type="password" class="form-control" id="txtPassword" ng-model="registerinfo.password" required
+									placeholder= 'Ex: 21jkjd834D'
+									/>
+								</div>
+							</div>
+							<div class="row form-group">
+
+								<div class="col-md-6">
+									<label for="txtEmail" class="control-label  visible-md">Email
+									</label>
+								</div>
+								<div class="col-md-6">
+									<input type="email" class="form-control" id="txtEmail" ng-model="registerinfo.email" required
+									placeholder= 'Ex: user@company.com'
+									/>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-xs-6 col-sm-6 col-md-6">
+									<button ng-disabled="form.$invalid" ng-click="register(registerinfo)" style="width:100%" class=" btn btn-primary">
+										Sign Up
+									</buttn>
+								</div>
+								<div class="col-xs-6  col-sm-6 col-md-6">
+									<button style="width:100%" class="btn btn-warning" hm-tap="$navigate.go('login','slide')">
+										Log In
+									</buttn>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="panel-footer">By npsopeak</div>
+				</div>
+				<!-- div : set up asset vault -->
+				<div class="panel panel-default" ng-hide="isformVaultDone()" >
+					<div class="panel-heading">
+						<h3 class="panel-title" style="">Setup Your Vault</h3>
+					</div>
+					<div class="panel-body" style="min-height:240px" >
+						<form class="form" id="formSetupVault" name="formVault" novalidate>
+							<div class="row form-group">
+
+								<div class="col-md-6">
+									<label for="txtVaultName" class="control-label visible-md">Vault Name
+									</label>
+								</div>
+								<div class="col-md-6">
+									<input type="text" require class="form-control" id="txtVaultName" ng-model="vault.name" required
+									placeholder="Ex: super-vault"
+									/>
+								</div>
+							</div>
+							<div class="row form-group">
+
+								<div class="col-md-6">
+									<label for="txtVaultPass" class="control-label  visible-md">Vault Password
+									</label>
+								</div>
+								<div class="col-md-6">
+									<input type="password" class="form-control" id="txtVaultPass" ng-model="vault.password" 
+									placeholder= 'Ex: 21jkjd834D'
+									/>
+								</div>
+							</div>
+							<div class="row form-group">
+
+								<div class="col-md-12">							
+									<input type="checkbox" value="" ng-model="vault.single_sign"> Single Sign on to this vault
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<button ng-disabled="formVault.$invalid " class="btn btn-warning" style="width:100%;" ng-click="setupVault(vault)">Set Up</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="panel-footer">By npsopeak</div>
+				</div>
+				<!-- intro vault-->
+				<div class="panel panel-default" >
+					<div class="panel-heading">
+						<h3 class="panel-title" style="">Wow! What is in your vault?</h3>
+					</div>
+					<div class="panel-body" style="min-height:240px">
+						<p>
+						In your vault, you can keeps your valuable things and able to manage it. Give it name, tag and even a shot to track your thing with more
+						visual power! So what are yoy waiting for? One more step, you will be at your door!
+					</p>
+					</div>
+					<div class="panel-footer">By npsopeak</div>
+				</div>
+				<!-- get Started -->
+				<div class="panel panel-default" >
+					<div class="panel-heading">
+						<h3 class="panel-title" style="">Get Started!!</h3>
+					</div>
+					<div class="panel-body" style="min-height:240px">
+						<p>
+							Finished already? Got disappointed!
+							<br/>
+							So click here to see what inside this box... <button class="btn btn-info" ng-click="finish()">Magic Box</button>
+						</p>
+					</div>
+					<div class="panel-footer">By npsopeak</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<script>
+	var myScroll2  = new iScroll('horiz-wrapper',{snap:true,hScrollbar:false});
+	
+	myScroll2.options.onBeforeScrollStart = function(e) {                
+        var target = e.target;
+
+        while (target.nodeType != 1) target = target.parentNode;
+
+        if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
+            e.preventDefault();
+        }
+    }
+</script>

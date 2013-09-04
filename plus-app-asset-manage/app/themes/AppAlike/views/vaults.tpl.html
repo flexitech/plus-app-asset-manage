@@ -1,0 +1,36 @@
+<div class="jira-content" style="width:100%; height:100%;">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8" style="position:relative; height:100%;">
+		<div id="vaultList-wrap-wrapper" class="vaultList-wrap-wrapper" style="position:absolute;overflow-y:scroll;bottom:0px;left:0px;top:0px;width:100%;" >
+			<div id="scroller" style="position:absolute;width:100%;">
+				<div class="vault-list">
+					<ul>
+						<li  ng-repeat="vault in vaults" hm-hold="showDelete('#delItem{{vault.ID}}')" hm-double-tap="editVault(vault.ID)"  hm-tap="hideDelete(); showAssets(vault);" >
+							<!-- row instance -->
+							<div class="row">
+								<div class="col-xs-2 col-sm-2 col-md-2 text-center text-center" >
+									<span class="glyphicon glyphicon-inbox" style="font-size:34px;"></span>
+								</div>
+								<div class="col-xs-10 col-sm-10 col-md-10">
+									<h3>{{vault.vault_name}} </h3>
+									<span class="sp-blue">Total Assets <span class="badge">{{getTotalAssetCount(vault.ID)}}</span></span>
+									<span class="sp-orange">Total Assets <span class="badge">{{getTotalAssetValue(vault.ID)}}</span></span>
+								</div>
+								<button class="btn btn-danger delete-vault" id="delItem{{vault.ID}}" hm-tap="deleteVault(vault.ID)">Delete</button>
+							</div>
+							<!-- row instance -->
+
+						</li>
+						
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+
+	var myScroll = new iScroll($('.vaultList-wrap-wrapper')[0],{useObject:true});
+	console.log("hellllllo");
+	setTimeout(function(){myScroll.refresh()},1000);
+</script>

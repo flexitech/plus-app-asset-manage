@@ -1,0 +1,110 @@
+<div class="jira-content" style="width:100%; height:100%;">
+	<div id="assetpricing-wrap-wrapper" class="assetpricing-wrap-wrapper" style="position:absolute;overflow-y:scroll;bottom:0px;left:0px;top:0px;width:100%;" >
+		<div id="scroller" style="position:absolute;width:100%;">
+			<div class="panel-group" style="height:auto;" >
+				<div class="panel panel-default" >
+					<div class="panel-heading">
+						<h3 class="panel-title" style=""><span style="text-transform:capitalize">{{mode}}</span> Asset Pricing for Asset#{{id}}</h3>
+					</div>
+					<div class="panel-body container" style="min-height:240px">
+						<form class="form" name="formAssetPricing" novalidate>
+							<div class="row form-group">
+
+								<div class="col-md-6">
+									<label for="txtPricingName" class="control-label visible-md">Pricing Name
+									</label>
+								</div>
+								<div class="col-md-6">
+									<input type="text" class="form-control" id="txtPricingName" ng-model="pricing.name" required
+									placeholder="Ex: Electricity Consumption"
+									/>
+								</div>
+							</div>
+							<div class="row form-group">
+
+								<div class="col-md-6">
+									<label for="txtCurrentQuantity" class="control-label  visible-md">Current Quantity
+									</label>
+								</div>
+								<div class="col-md-6">
+									
+									
+									<input type="number" class="form-control" id="txtCurrentQuantity" ng-model="pricing.current_qty" required
+									placeholder="Current Quantity. Ex: 100"
+									/>
+								</div>
+							</div>
+							<div class="row form-group">
+
+								<div class="col-md-6">
+									<label for="txtUnit" class="control-label visible-md">Unit
+									</label>
+								</div>
+								<div class="col-md-6">
+									<input type="text" class="form-control" id="txtUnit" ng-model="pricing.unit"
+									placeholder="Unit: Ex: kwh"
+									/>
+								</div>
+							</div>
+							<div class="row form-group">
+
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<label for="cboCurrency" class="control-label visible-md visible-sm	 visible-xs">Currency
+									</label>
+								</div>
+								<div class="col-xs-8 col-sm-8 col-md-8">
+									
+									<select class="form-control" id="cboCurrency" ng-model="pricing.currency" placeholder="Select a currency" required>
+										<option value="Riel">Riel</option>
+										<option value="Dollar">Dollar</option>
+										<option value="Bat">Bat</option>
+										
+									</select>
+								</div>
+							</div>
+							<div class="row form-group">
+
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<label for="txtPrice" class="control-label visible-md visible-sm	 visible-xs">Price
+									</label>
+								</div>
+								<div class="col-xs-8 col-sm-8 col-md-8">
+									<input type="number" class="form-control" id="txtPrice" ng-model="pricing.price" required
+									placeholder="Price. Ex: 50"
+									/>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-xs-12 col-sm-12 col-md-12">
+									<input type="checkbox" ng-model="pricing.value_can_change" class=""/> Value can change
+								</div>
+							</div>
+							
+							<div class="row form-group">						
+								<div class="col-xs-12  col-sm-12 col-md-6">
+									<button ng-disabled="formAssetPricing.$invalid" style="width:100%" class="btn btn-warning" ng-click="createPricing(pricing)">
+										<span style="text-transform:capitalize">{{mode}}</span> Asset Price Plan
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="panel-footer">Asset Management System</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	var myScroll = new iScroll($('#assetpricing-wrap-wrapper')[0],{useObject:true});
+	myScroll.options.onBeforeScrollStart = function(e) {                
+	        var target = e.target;
+
+	        while (target.nodeType != 1) target = target.parentNode;
+
+	        if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
+	            e.preventDefault();
+	        }
+	    }
+	setTimeout(function(){myScroll.refresh()},1000);
+</script>

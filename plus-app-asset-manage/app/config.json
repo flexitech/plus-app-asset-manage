@@ -1,0 +1,22 @@
+{
+	"name" : "Asset Management",
+	"server_url" : "https://plus-app-learn2.appspot.com/",
+	"server_secret" : "521ff8c8297fa34773ce",
+	"client_redirect" : "http://localhost:3035/agora/",
+	"environment" : "development",
+	/*
+	 * Specify the name of the desired theme
+	 */
+	
+	"theme" :"AppAlike",
+
+	/*
+	 * plugins add to the functionality of Plus.io Frontend
+	 */
+	"plugins" : [],
+
+	/*
+	 * This array specifies the names of javascript files in your app/includes/scripts folder
+	 */
+	"scripts" : ["controllers"]
+}

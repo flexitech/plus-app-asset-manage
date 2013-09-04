@@ -1,0 +1,2 @@
+add system/vendor/script.directive/slide-menu.js : menu sliding
+edit system/setup/init.js:  line#73: "system/scripts/directives/slide-menu.js",

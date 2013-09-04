@@ -1,0 +1,38 @@
+<div class="jira-content" style="width:100%; height:100%;" hm-tap="hidePaid();">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8" style="position:relative; height:100%;">
+		<div id="invoices-wrap-wrapper" class="invoices-wrap-wrapper" style="position:absolute;overflow-y:scroll;bottom:0px;left:0px;top:0px;width:100%;" >
+			<div id="scroller" style="position:absolute;width:100%;">
+				<div class="invoice-list">
+					<ul>
+						<li ng-repeat="invoice in invoices | orderBy:paid" hm-hold="showPaid('#paid{{invoice.ID}}')" hm-tap="hidePaid();view({{invoice.ID}});" >
+							<!-- row instance -->
+							<div class="row">
+								<div class="col-xs-2 col-sm-2 col-md-2 text-center text-center" >
+									<span ng-switch="invoice.paid">
+										<span ng-switch-when="false" class="glyphicon glyphicon-star" style="font-size:34px;"></span>
+										<span ng-switch-default class="glyphicon glyphicon-star-empty" style="font-size:34px;"></span>
+									</span>
+								</div>
+								<div class="col-xs-10 col-sm-10 col-md-10">
+									<h3>Invoice #{{invoice.ID}} for '{{getBillingName(invoice.ID)}}' </h3>
+									<span class="sp-blue">Created Date <span class="badge">{{invoice.created_date}}</span></span>
+									<span class="sp-orange">Amount <span class="badge">{{invoice.total_value}}</span></span>
+								</div>
+								<button ng-disabled="!invoice.paid" class="btn btn-danger pay-invoice" id="paid{{invoice.ID}}" hm-tap="pay(invoice.ID)">Paid</button>
+							</div>
+							<!-- row instance -->
+
+						</li>
+						
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+
+	var myScroll = new iScroll($('.invoices-wrap-wrapper')[0],{useObject:true});
+	setTimeout(function(){myScroll.refresh()},1000);
+</script>

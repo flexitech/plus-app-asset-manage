@@ -1,0 +1,91 @@
+<div class="jira-content" style="width:100%; height:100%;">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8" style="position:relative; height:100%;">
+		<div id="billingPlanInfo-wrap-wrapper" class="billingPlanInfo-wrap-wrapper" style="position:absolute;overflow-y:scroll;bottom:0px;left:0px;top:0px;width:100%;" >
+			<div id="scroller" style="position:absolute;width:100%;">
+				<div class="panel-group" style="height:auto;" >
+					<div class="panel panel-default" >
+						<div class="panel-heading">
+							<h3 class="panel-title" style=""><span style="text-transform:capitalize">{{mode}}</span> Billing Plan for Asset#{{id}}</h3>
+						</div>
+						<div class="panel-body container" style="min-height:240px">
+							<form class="form" name="formBillingPlan" novalidate>
+								<div class="row form-group">
+
+									<div class="col-md-12">
+										<label for="txtBillName" class="control-label visible-md">Bill Name
+										</label>
+									</div>
+									<div class="col-md-12">
+										<input type="text" class="form-control" id="txtBillName" ng-model="bill.name" required
+										placeholder="Ex: Bill for Room No 1"
+										/>
+									</div>
+								</div>
+								<div class="row form-group">
+
+									<div class="col-md-12">
+										<label for="txtNote" class="control-label  visible-md">Note
+										</label>
+									</div>
+									<div class="col-md-12">
+										
+										<textarea ng-model="bill.note" id="txtNote" class="form-control" rows="3"></textarea>
+									</div>
+								</div>
+								
+								<div class="row form-group">
+
+									<div class="col-md-12">
+										<label for="txtTag" class="control-label visible-md">Tag
+										</label>
+									</div>
+									<div class="col-md-12">
+										<input type="text" class="form-control" id="txtTag" ng-model="bill.tag" required
+										placeholder="Tag. Ex: expensive,profittable"
+										/>
+									</div>
+								</div>
+								<div class="row form-group">
+
+									<div class="col-md-12">
+										<label for="txtDueDate" class="control-label visible-md">Due Date
+										</label>
+									</div>
+									<div class="col-md-12">
+										<input type="date" class="form-control" id="txtDueDate" ng-model="bill.duedate" required
+										placeholder="Due Date: Ex: 19/9/2013"
+										/>
+									</div>
+								</div>
+								<div class="row form-group">						
+									<div class="col-xs-6  col-sm-6 col-md-6">
+										<button ng-disabled="formBillingPlan.$invalid" style="width:100%" class="btn btn-warning" ng-click="createBill(bill)">
+											<span style="text-transform:capitalize">{{mode}}</span> Billign Plan
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="panel-footer">Asset Management System</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	setTimeout(function(){
+		console.log("hey u there!!");
+		var myScroll = new iScroll($('.billingPlanInfo-wrap-wrapper')[0],{useObject:true});
+		myScroll.options.onBeforeScrollStart = function(e) {                
+	        var target = e.target;
+
+	        while (target.nodeType != 1) target = target.parentNode;
+
+	        if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
+	            e.preventDefault();
+	        }
+	    }
+		setInterval(function(){myScroll.refresh()},1000);
+	},300);
+</script>

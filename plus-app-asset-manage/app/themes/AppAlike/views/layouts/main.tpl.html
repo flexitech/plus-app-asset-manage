@@ -1,0 +1,77 @@
+
+<div id="navPage" class="navPage" ng-controller="NavController">
+	<div id="navPage-wrap-wrapper" class="navPage-wrap-wrapper" style="position:absolute;overflow-y:scroll;bottom:0px;left:0px;top:0px;width:100%;" >
+		<div id="scroller" style="position:absolute;width:100%;">
+			<ul>
+				<li class="active"> <span class="glyphicon glyphicon-book "></span> My Home
+				</li>
+				<li class="group" ng-show="userLogined()">
+					<ul>
+						<li> <span class="" ></span> <a hm-tap="$navigate.go('vaults','slide')" >My Vault</a>
+						</li>
+						<li> <span class=""></span> <a href="#">My Account</a>
+						</li>
+						<li> <span class="" ></span> <a hm-tap="logoff()" >Log Off</a>
+						</li>
+					</ul>
+				</li>
+				<li ng-hide="userLogined()" class="group">
+					<ul>
+						<li> <span class="" ></span> <a  hm-tap="$navigate.go('login','slide')">Log In</a>
+						</li>
+						<li> <span class="" ></span> <a hm-tap="$navigate.go('startup','slide')">Register</a>
+						</li>
+					</ul>
+				</li>
+				<li class="group" ng-show="userLogined()">
+					<ul>
+						<li class="category"> <span class=""></span> Important
+						</li>
+						<li ng-repeat="notice in importantNotice" > <span class=""></span> <a ng-disabled="notice.value>0" hm-tap="$navigate.go('{{notice.link}}','slide');">{{notice.text}} <span class="badge pull-right">{{notice.value}}</span></a>
+						</li>
+						<!-- <li> <span class=""></span> <a href="#">Due Invoices <span class="badge pull-right">99+</span></a>
+						</li>
+						<li> <span class=""></span> <a href="#">Message <span class="badge pull-right">99+</span></a>
+						</li> -->
+					</ul>
+				</li>
+				<li class="group" ng-show="userLogined()">
+					<ul>
+						<li class="category"> <span class=""></span> Current Assets
+						</li>
+						<li ng-repeat="asset in current_assets"> <span class=""></span> <a hm-tap="$navigate.go('assets/viewby/{{asset.asset_type}}','slide')"> {{asset.asset_type}} <span class="badge pull-right">{{asset.asset_count}}</span></a>
+						</li>
+						<!-- <li> <span class=""></span> <a href="#"> Bikes <span class="badge pull-right">99+</span></a>
+						</li>
+						<li> <span class=""></span> <a href="#">Cars <span class="badge pull-right">99+</span></a>
+						</li> -->
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<script>
+	
+	var myScroll;
+	setTimeout(function(){
+		var myScroll = new iScroll($('#navPage-wrap-wrapper')[0],{userObject:true});
+		/*setInterval(function(){
+			console.log("dfdfdfd" + myScroll);
+			if (myScroll!=undefined){
+				myScroll.refresh();
+			}
+		},1000);*/
+		}
+	,1000);
+
+
+</script>
+<div id="wholePage" class="wholePage">
+	<header  class="navbar navbar-fixed-top" ng-include="app.paths.view('layouts/_header')"></header>
+			<div id="wrapper"   plus-template>
+
+			</div>		
+	<footer class="navbar navbar-fixed-bottom" ng-include="app.paths.view('layouts/_footer')"></footer>
+	<div class="clear"></div>
+</div>

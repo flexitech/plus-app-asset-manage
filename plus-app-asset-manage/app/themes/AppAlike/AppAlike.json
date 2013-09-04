@@ -1,0 +1,160 @@
+{
+	/*
+	 * Theme name, must be identical to the directory name
+	 */
+	"title" : "Cont3nt AngkorOne",
+	"author" : "nps",
+
+	"files" : {
+		"css" : ["css/bootstrap.min", "css/style"
+				],
+		"js"  : ["js/theme_controllers","js/iscroll","js/theme_transaction_controller"
+				]
+	},
+	"routes" : [
+	
+				
+		{	"path":"/startup",	
+			"layout":"layouts/main",		
+			"template":"startup", 
+			"title":"Register",
+			"class":"room",
+			"controller":"StartUpController",
+			"transition":"slide"
+		},
+		{	"path":"/home",	
+			"layout":"layouts/main",		
+			"template":"home", 
+			"title":"Home",
+			"class":"home ",
+			"controller":"HomeController",
+			"transition":"slide"},
+			
+		{	"path":"/billing_plan_view",	
+			"layout":"layouts/main",		
+			"template":"transactions/billing_plan_view", 
+			"title":"Billing Plan",
+			"class":"billing_plan_view media",
+			"controller":"BillingPlanViewController",
+			"transition":"slide"
+		},
+		{	"path":"/billing_plan_view_all_assets",	
+			"layout":"layouts/main",		
+			"template":"transactions/billing_plan_view_all_assets", 
+			"title":"Select an Asset",
+			"class":"billing_plan_view_all_assets",
+			"controller":"BillingPlanViewAllAssetController",
+			"transition":"slide"
+		},
+		{	"path":"/billing_plan_info/:id/:mode",	
+			"layout":"layouts/main",		
+			"template":"transactions/billing_plan_info", 
+			"title":"Create a plan",
+			"class":"billing_plan_info",
+			"controller":"BillingPlanInfoController",
+			"transition":"slide"
+		},
+		{	"path":"/invoice_view_all_billing_plan/:val/:mode",	
+			"layout":"layouts/main",		
+			"template":"transactions/invoice_view_all_billing_plan", 
+			"title":"Create Invoice",
+			"class":"invoice_view_all_billing_plan",
+			"controller":"InvoiceViewAllBillingPlanController",
+			"transition":"slide"
+		},
+		{	"path":"/invoice_view_all_billing_plan",	
+			"layout":"layouts/main",		
+			"template":"transactions/invoice_view_all_billing_plan", 
+			"title":"Create Invoice",
+			"class":"invoice_view_all_billing_plan media",
+			"controller":"InvoiceViewAllBillingPlanController",
+			"transition":"slide"
+		},
+		{	"path":"/invoice_view_all",	
+			"layout":"layouts/main",		
+			"template":"transactions/invoice_view_all", 
+			"title":"View Invoices",
+			"class":"invoice_view_all media",
+			"controller":"InvoiceViewAllController",
+			"transition":"slide"
+		},
+		{	"path":"/invoice_view/:id",	
+			"layout":"layouts/main",		
+			"template":"transactions/invoice_view", 
+			"title":"View Invoice",
+			"class":"invoice_view",
+			"controller":"InvoiceViewController",
+			"transition":"slide"
+		},
+		{	"path":"/invoice_info/:id",	
+			"layout":"layouts/main",		
+			"template":"transactions/invoice_info", 
+			"title":"Create Invoice",
+			"class":"invoice_info",
+			"controller":"InvoiceInfoController",
+			"transition":"slide"
+		},
+		{	"path":"/vaults",	
+			"layout":"layouts/main",		
+			"template":"vaults", 
+			"title":"Vaults",
+			"class":"vaults",
+			"controller":"VaultController",
+			"transition":"slide"
+		},{	"path":"/vaults/:id/:mode",	
+			"layout":"layouts/main",		
+			"template":"new_vaults", 
+			"title":"New Vaults",
+			"class":"new_vaults",
+			"controller":"VaultInfoController",
+			"transition":"slide"
+		},
+		{	"path":"/assets/:vault_id",	
+			"layout":"layouts/main",		
+			"template":"assets", 
+			"title":"Assets",
+			"class":"assets",
+			"controller":"AssetController",
+			"transition":"slide"
+		},
+		{	"path":"/assets/:mode/:asset_type",	
+			"layout":"layouts/main",		
+			"template":"assets", 
+			"title":"Assets",
+			"class":"assets",
+			"controller":"AssetController",
+			"transition":"slide"
+		},
+		{	"path":"/new_assets/:id/:mode",	
+			"layout":"layouts/main",		
+			"template":"new_assets", 
+			"title":"New Assets",
+			"class":"new_assets",
+			"controller":"AssetInfoController",
+			"transition":"slide"
+		},{	"path":"/asset_pricing/:id/:mode",	
+			"layout":"layouts/main",		
+			"template":"asset_pricing", 
+			"title":"Asset Pricing",
+			"class":"asset_pricing",
+			"controller":"AssetPricingController",
+			"transition":"slide"
+		},{	"path":"/view_asset/:id",	
+			"layout":"layouts/main",		
+			"template":"view_asset", 
+			"title":"View Asset",
+			"class":"view_asset",
+			"controller":"AssetViewController",
+			"transition":"slide"
+		},
+		{	"path":"/login",	
+			"layout":"layouts/main",		
+			"template":"login", 
+			"title":"Login",
+			"class":"login",
+			"controller":"LoginController",
+			"transition":"slide"
+		},
+		{ "otherwise" : "/home" }
+	]
+}
