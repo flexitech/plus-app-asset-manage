@@ -1025,7 +1025,8 @@ $app.controller('LoginController', function($scope,SearchBarHandler, $http,Local
 $app.controller('FileUploaderController', function($scope,SearchBarHandler,MyUploader, $http,LocalMyDb,$navigate,CacheServiceApp,MethodHandler,$location,plus){
 	SearchBarHandler.enable=false;
 	$scope.selectFile = function(){
-		$('#file').click();
+		
+		$('#fileupload-control').click();
 	}
 	$scope.selectedFile = null;
 	$scope.fileNameChanged=function(that){
