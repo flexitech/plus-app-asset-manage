@@ -90,7 +90,92 @@ $app.factory('LocalMyDb',function(){
 	}
 	return dbAccess;
 });
+//////// upload file service 
+$app.factory('MyUploader',function(){
+	/******* usage ********/
+	/*
+		- inject MyUploader service to controller
+		- call set up uploading
+			+ MyUploader.setOption('file','video.mp4','video/mp4');
+			+ MyUploader.setParams({dir:'/server1/',user_id:1});
+			+ MyUploader.init('http://myserver.com/fileupload.php','file:///video.mp4',
+				successcallback,errorcallback,progresscallback);
+				* function successcallback(){}
+				* function errorcallback(){}
+				* function progresscallback(percentage,computable){}
 
+	*/
+	var uploader={};
+	uploader.options =null;
+	uploader.serverURL = "";
+
+	uploader.params = Object();
+	uploader.setOptions=function(filekey,filename,mimetype){
+		var options = new FileUploadOptions();
+		options.fileKey = filekey;
+		options.fileName =filename;
+		options.mimeType = mimetype;
+		uploader.options = options;
+		return options;
+	}
+	uploader.setParams=function(array){
+		uploader.params = {};
+		_.each(array,function(value,key){
+			uploader.params[key] = value;
+		});
+		return uploader.params;
+	}
+	uploader.init=function(server_url,fileuri,onsuccess,onerror,onprogress){
+		if (typeof uploader.options == FileUploadOptions){
+			uploader.options.params = uploader.params;
+			uploader.options.chunkedMode = false;
+			var ft = new FileTransfer();
+			ft.onprogress = function(progressEvent){
+				if (progressEvent.lengthComputable){
+					if (onprogress!=null){
+						onprogress(progressEvent.loaded/progressEvent.total,true);
+					}
+					else{
+
+						console.log("onprogress event not working!#1: " + (progressEvent.loaded/progressEvent.total));
+					}
+				}
+				else{
+					if (onprogress!=null){
+						onprogress(1,false);
+					}
+					else{
+
+						console.log("onprogress event not working!#2: + 1" );
+					}
+				}
+			}
+
+			ft.upload(
+					fileuri,
+					server_url,
+					function(){
+						if (onsuccess!=null){
+							onsuccess();
+						}
+						console.log("upload successfully!");
+					},
+					function(){
+						if (onerror!=null){
+							onerror();
+						}
+						console.log("upload fail!");
+					},
+					uploader.options
+				);
+			
+		}
+		else{
+			alert("Options parameter of 'MyUploader' has not been set properly!");
+		}
+	}
+	return uploader;
+});
 $app.controller('LayoutController', function($scope, $http,CacheServiceApp){
 
   $scope.userLogined = function(){
@@ -934,5 +1019,62 @@ $app.controller('LoginController', function($scope,SearchBarHandler, $http,Local
 			alert("Invalid Username or password!");
 		}
 
+	}
+});
+
+$app.controller('FileUploaderController', function($scope,SearchBarHandler,MyUploader, $http,LocalMyDb,$navigate,CacheServiceApp,MethodHandler,$location,plus){
+	SearchBarHandler.enable=false;
+	$scope.selectFile = function(){
+		$('#file').click();
+	}
+	$scope.selectedFile = null;
+	$scope.fileNameChanged=function(that){
+		$scope.selectedFile = null;
+		if (that.files.length>0){
+			var file = that.files[0];
+			$scope.selectedFile = file;
+			$scope.selectedFile.getSizeMb=function(){
+				return $scope.selectedFile.size/(1024*1024);
+			}
+			$scope.selectedFile.getSizeKb=function(){
+				return $scope.selectedFile.size/(1024);
+			}
+			$scope.selectedFile.getSize=function(){
+				if ($scope.selectedFile.size<1024){
+					return $scope.selectedFile.size + " byte";
+				}
+				else if ($scope.selectedFile.size<1024*1024){
+					return Math.round($scope.selectedFile.getSizeKb()*100)/100 + " KB";
+
+				}
+				else{
+					return Math.round($scope.selectedFile.getSizeMb()*100)/100  + " MB";
+
+				}
+			}
+			$scope.percentage=100;	
+			$scope.$apply();
+			MyUploader.setOptions('file',$scope.selectedFile.filename,$scope.selectedFile.type);
+			MyUploader.setParams({dir:'/server1/',user_id:1});
+			MyUploader.init('http://localhost:8030/upload-files/phonegap/serviceside.php',
+				$scope.selectedFile.filename,
+				successcallback,errorcallback,progresscallback);
+				
+		}
+
+		
+	}
+	function successcallback(){console.log("success -----------------------");}
+	function errorcallback(){console.log("error -----------------------");}
+	function progresscallback(percentage,computable){
+		if (computable)
+			$scope.percentage=percentage;
+		else{
+			$scope.percentage+=1;
+		}
+	}
+	$scope.percentage = 0;
+	$scope.getPercentage=function(){
+		return $scope.percentage;
 	}
 });

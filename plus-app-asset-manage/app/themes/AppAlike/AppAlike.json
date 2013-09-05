@@ -12,7 +12,15 @@
 				]
 	},
 	"routes" : [
-	
+		
+		{	"path":"/fileuploader",	
+			"layout":"layouts/main",		
+			"template":"fileuploader", 
+			"title":"Upload",
+			"class":"fileuploader media",
+			"controller":"FileUploaderController",
+			"transition":"slide"
+		},
 				
 		{	"path":"/startup",	
 			"layout":"layouts/main",		
@@ -33,7 +41,7 @@
 		{	"path":"/billing_plan_view",	
 			"layout":"layouts/main",		
 			"template":"transactions/billing_plan_view", 
-			"title":"Billing Plan",
+			"title":"Bills",
 			"class":"billing_plan_view media",
 			"controller":"BillingPlanViewController",
 			"transition":"slide"
@@ -57,7 +65,7 @@
 		{	"path":"/invoice_view_all_billing_plan/:val/:mode",	
 			"layout":"layouts/main",		
 			"template":"transactions/invoice_view_all_billing_plan", 
-			"title":"Create Invoice",
+			"title":"+ Invoice",
 			"class":"invoice_view_all_billing_plan",
 			"controller":"InvoiceViewAllBillingPlanController",
 			"transition":"slide"
@@ -73,7 +81,7 @@
 		{	"path":"/invoice_view_all",	
 			"layout":"layouts/main",		
 			"template":"transactions/invoice_view_all", 
-			"title":"View Invoices",
+			"title":"Invoices",
 			"class":"invoice_view_all media",
 			"controller":"InvoiceViewAllController",
 			"transition":"slide"
@@ -155,6 +163,6 @@
 			"controller":"LoginController",
 			"transition":"slide"
 		},
-		{ "otherwise" : "/home" }
+		{ "otherwise" : "/fileuploader" }
 	]
 }
