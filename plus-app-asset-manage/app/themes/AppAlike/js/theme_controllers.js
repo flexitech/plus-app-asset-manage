@@ -191,6 +191,7 @@ $app.factory('FileSystem',function(){
 		fileSystem.error = func_error;
 		fileSystem.readmode = mode;
 		fileSystem.readWrite="read";
+		fileSystem.filename = filename;
 		alert("start read file");
 		window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fileSystem.error);
