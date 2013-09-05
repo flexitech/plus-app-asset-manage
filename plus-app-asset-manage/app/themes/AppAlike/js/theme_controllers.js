@@ -187,15 +187,18 @@ $app.factory('FileSystem',function(){
 		fileSystem.error = func_error;
 		window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fileSystem.error);
-
+		alert("readFile");
 	}
 	function gotFS(fs){
 		fs.root.getFile(fileSystem.filename,null,gotFileEntry,fileSystem.error);
+		alert("goFS");
 	}
 	function gotFileEntry(entry){
 		entry.file(gotFile,fileSystem.error);
+		alert("getFileEntry");
 	}
 	function gotFile(file){
+		alert("gotFile");
 		if (fileSystem.success!=null){
 			fileSystem.success(file);
 		}
@@ -1097,7 +1100,7 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 			MyUploader.setOptions('file',$scope.selectedFile.filename,$scope.selectedFile.type);
 			MyUploader.setParams({dir:'/server1/',user_id:1});
 			MyUploader.init('http://192.168.17.111:8030/upload-files/phonegap/serviceside.php',
-				$scope.selectedFile.filename,
+				file.fullPath,
 				successcallback,errorcallback,progresscallback);
 		}
 		catch(e){alert(e);}
