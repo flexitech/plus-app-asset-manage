@@ -1112,8 +1112,8 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 	function error(evt){
 		alert("error reading file!" + evt.target.error.code);
 	}
-	function successcallback(e){alert("success -----------------------" + e);}
-	function errorcallback(e){alert("error -----------------------" + e);}
+	function successcallback(e){alert(e.response + "success -----------------------" + e.responseCode);}
+	function errorcallback(e){alert(e.response + "error -----------------------" + e.code);}
 	function progresscallback(percentage,computable){
 		if (computable)
 			$scope.percentage=percentage;
