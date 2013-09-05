@@ -40,6 +40,7 @@ loadCss ("system/vendor/angular-mobile-nav/mobile-nav.css");
 loadCss ("system/includes/fonts/roboto-fontfacekit/stylesheet.css");
 head.js(
 	"phonegap.js",
+	//"cordova.js",
 	"system/vendor/jquery/jquery-2.0.0.min.js",
 	"system/vendor/EightMedia/hammer-1.0.5.min.js",
 	"system/vendor/underscore/underscore.js",
