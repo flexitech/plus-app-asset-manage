@@ -161,6 +161,7 @@ $app.factory('MyUploader',function(){
 						console.log("upload successfully!");
 					},
 					function(e){
+						alert(e.code);
 						if (onerror!=null){
 							onerror(e);
 						}
