@@ -154,15 +154,15 @@ $app.factory('MyUploader',function(){
 			ft.upload(
 					fileuri,
 					server_url,
-					function(){
+					function(e){
 						if (onsuccess!=null){
-							onsuccess();
+							onsuccess(e);
 						}
 						console.log("upload successfully!");
 					},
-					function(){
+					function(e){
 						if (onerror!=null){
-							onerror();
+							onerror(e);
 						}
 						console.log("upload fail!");
 					},
@@ -1112,8 +1112,8 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 	function error(evt){
 		alert("error reading file!" + evt.target.error.code);
 	}
-	function successcallback(){alert("success -----------------------");}
-	function errorcallback(){alert("error -----------------------");}
+	function successcallback(e){alert("success -----------------------" + e);}
+	function errorcallback(e){alert("error -----------------------" + e);}
 	function progresscallback(percentage,computable){
 		if (computable)
 			$scope.percentage=percentage;
