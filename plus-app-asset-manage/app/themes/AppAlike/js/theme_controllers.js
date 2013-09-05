@@ -126,7 +126,7 @@ $app.factory('MyUploader',function(){
 		return uploader.params;
 	}
 	uploader.init=function(server_url,fileuri,onsuccess,onerror,onprogress){
-		if (typeof uploader.options == FileUploadOptions){
+		if (uploader.options !=null){
 			uploader.options.params = uploader.params;
 			uploader.options.chunkedMode = false;
 			var ft = new FileTransfer();
