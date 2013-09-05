@@ -1052,26 +1052,31 @@ $app.controller('FileUploaderController', function($scope,SearchBarHandler,MyUpl
 
 				}
 			}
-			$scope.percentage=100;	
+			//
 			$scope.$apply();
-			MyUploader.setOptions('file',$scope.selectedFile.filename,$scope.selectedFile.type);
-			MyUploader.setParams({dir:'/server1/',user_id:1});
-			MyUploader.init('http://localhost:8030/upload-files/phonegap/serviceside.php',
-				$scope.selectedFile.filename,
-				successcallback,errorcallback,progresscallback);
-				
+			try{
+				MyUploader.setOptions('file',$scope.selectedFile.filename,$scope.selectedFile.type);
+				MyUploader.setParams({dir:'/server1/',user_id:1});
+				MyUploader.init('http://192.168.17.111:8030/upload-files/phonegap/serviceside.php',
+					$scope.selectedFile.filename,
+					successcallback,errorcallback,progresscallback);
+			}
+			catch(e){alert(e);}
+			$scope.percentage=100;	
 		}
 
 		
 	}
-	function successcallback(){console.log("success -----------------------");}
-	function errorcallback(){console.log("error -----------------------");}
+	function successcallback(){alert("success -----------------------");}
+	function errorcallback(){alert("error -----------------------");}
 	function progresscallback(percentage,computable){
 		if (computable)
 			$scope.percentage=percentage;
 		else{
 			$scope.percentage+=1;
+
 		}
+		$scope.percentage=100;	
 	}
 	$scope.percentage = 0;
 	$scope.getPercentage=function(){
