@@ -223,7 +223,7 @@ $app.factory('FileSystem',function(){
 		
 	}
 	function gotFileWriter(writer){
-		alert("start write");
+		alert("start write" + fileSystem.writingText);
         writer.onwrite = function(evt) {
             alert("write success");
         };
