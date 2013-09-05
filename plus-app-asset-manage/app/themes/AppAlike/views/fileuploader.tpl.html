@@ -1,71 +1,165 @@
 <div class="jira-content" style="width:100%; height:100%;">
-	<div class="panel-group" style="" >
-		<div class="panel panel-default" >
-			<div class="panel-heading">
-				<h3 class="panel-title" style="">Upload Asset Image</h3>
-			</div>
-			<div class="panel-body container" style="min-height:240px">
-				<form class="form" name="formUploader" novalidate>
-					<div class="row form-group">
-						<div ng-switch="selectedFile">
-							<div ng-switch-when="null">
-								<div class="col-xs-6 col-sm-6 col-md-6">
-									<label for="fileUploader" class="control-label visible-xs visible-sm visible-md">Browse file
-									</label>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-6">
-									<button id="fileUploader" type="button" class="btn btn-primary" ng-click="selectFile()">
-										
-										Upload
-									</button>
-									<input type="file" name="file" id="fileupload-control" style="height:0px;width:0px;" 
-										onchange="angular.element(this).scope().fileNameChanged(this)"
-									/>
-								</div>
-							</div>
-							<div ng-switch-default>
-								<div class="col-xs-3 col-sm-3 col-md-3">
-									<label  class="control-label visible-xs visible-sm visible-md">File:
-									</label>
-								</div>
-								<div class="col-xs-9 col-sm-9 col-md-9">
-									<label class="control-label">
-										<span>Name </span> {{selectedFile.name}},
-										<span>{{selectedFile.getSize()}} byte</span>
-									</label>
-								</div>
-							</div>
-						</div>
+	<div id="file-wrap-wrapper" class="file-wrap-wrapper" style="position:absolute;overflow-y:scroll;bottom:0px;left:0px;top:0px;width:100%;" >
+		<div id="scroller" style="position:absolute;width:100%;">
+			<div class="panel-group" style="" >
+				<div class="panel panel-default" >
+					<div class="panel-heading">
+						<h3 class="panel-title" style="">Upload Asset Image</h3>
 					</div>
-					<div class="row form-group">
+					<div class="panel-body container" style="min-height:240px">
+						<form method="POST" id="form1"  name="form1" class="form1 form" role="form" enctype="multipart/form-data" novalidate>
+										<input type="file" name="file" id="fileupload-control" style="height:1px;width:1px;" 
+												onchange="angular.element(this).scope().fileNameChanged(this)"
+											/>
+							<div class="row form-group">
+								<div ng-switch="selectedFile">
 
-						<div class="col-md-6">
-							<label class="control-label  visible-md">Progress
-							</label>
-						</div>
-						<div class="col-md-6">
-							
-							<div class="progress progress-striped active">
-								<div class="progress-bar" role="progressbar"
-									aria-valuenow="{{getPercentage()}}" aria-valuemin="0"
-									aria-valuemax="100"
-									style="width:{{getPercentage()}}%;">
-									<span class="visible-xs visible-sm visible-md">{{getPercentage()}}% Completed</span>
+										<div ng-switch-when="null">
+											<div class="col-xs-6 col-sm-6 col-md-6">
+												<label for="fileUploader" class="control-label visible-xs visible-sm visible-md">Browse file
+												</label>
+											</div>
+											<div class="col-xs-6 col-sm-6 col-md-6">
+												
+												<button id="fileUploader" type="button" class="btn btn-primary" ng-click="selectFile()">
+													
+													Upload
+												</button>
+											
+											</div>
+										</div>
+										<div ng-switch-default>
+											<div class="col-xs-3 col-sm-3 col-md-3">
+												<label  class="control-label visible-xs visible-sm visible-md">File:
+												</label>
+											</div>
+											<div class="col-xs-9 col-sm-9 col-md-9">
+												<label class="control-label">
+													<span>Name </span> {{selectedFile.name}},
+													<span>{{selectedFile.getSize()}} byte</span>
+												</label>
+											</div>
+										</div>
+
+									
 								</div>
 							</div>
-						</div>
+							<div class="row form-group">
+
+								<div class="col-md-6">
+									<label class="control-label  visible-md">Progress
+									</label>
+								</div>
+								<div class="col-md-6">
+									
+									<div class="progress progress-striped active">
+										<div class="progress-bar" role="progressbar"
+											aria-valuenow="{{getPercentage()}}" aria-valuemin="0"
+											aria-valuemax="100"
+											style="width:{{getPercentage()}}%;">
+											<span class="visible-xs visible-sm visible-md">{{getPercentage()}}% Completed</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						
+							<div class="row form-group">						
+								<div class="col-xs-6  col-sm-6 col-md-6">
+									<button ng-disabled="formUploader.$invalid" style="width:100%" class="btn btn-warning" ng-click="resetForm();">
+										New Upload
+									</button>
+								</div>
+							</div>
+						</form>
 					</div>
-				
-					<div class="row form-group">						
-						<div class="col-xs-6  col-sm-6 col-md-6">
-							<button ng-disabled="formUploader.$invalid" style="width:100%" class="btn btn-warning" >
-								Upload
-							</button>
-						</div>
+					<div class="panel-footer">Asset Management System</div>
+				</div>
+				<div class="panel panel-default" >
+					<div class="panel-heading">
+						<h3 class="panel-title" style="">Create Directory</h3>
 					</div>
-				</form>
+					<div class="panel-body container" style="min-height:240px">
+						
+						<div class="row form-group">
+							
+							<div class="col-xs-6 col-sm-6 col-md-6">
+								<label for="fileUploader" class="control-label visible-xs visible-sm visible-md">Directory
+								</label>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6">
+								
+								<input type="text" style="width:100%" ng-model="fs.dir"/>
+							
+							</div>
+						</div>
+									
+						<div class="row form-group">
+							<div class="col-xs-6 col-sm-6 col-md-6">
+								<button id="" type="button" class="btn btn-primary" ng-click="createDir(fs)">
+										
+										Create Dir
+								</button>
+							</div>
+						</div>
+						<div class="row form-group">
+							
+							<div class="col-xs-3 col-sm-3 col-md-3">
+								<label for="fileUploader" class="control-label visible-xs visible-sm visible-md">File
+								</label>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6">
+								
+								<input type="text" ng-model="fs.fname"/>
+							
+							</div>
+						</div>
+						<div class="row form-group">
+							
+						
+							<div class="col-xs-12 col-sm-12 col-md-12">
+								
+								<textarea row="5" style="width:100%;" ng-model="fs.fcontent"></textarea>
+							
+							</div>
+						</div>
+									
+						<div class="row form-group">
+							<div class="col-xs-6 col-sm-6 col-md-6">
+								<button id="" type="button" class="btn btn-info" ng-click="read(fs)">
+										
+										Read File
+								</button>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6">
+								<button id="" type="button" class="btn btn-primary" ng-click="write(fs)">
+										
+										Write File
+								</button>
+							</div>
+						</div>
+						
+							
+					</div>
+					<div class="panel-footer">Asset Management System</div>
+				</div>
 			</div>
-			<div class="panel-footer">Asset Management System</div>
 		</div>
 	</div>
 </div>
+
+<script>
+	setTimeout(function(){
+		
+		var myScroll = new iScroll($('.file-wrap-wrapper')[0],{useObject:true});
+		myScroll.options.onBeforeScrollStart = function(e) {                
+	        var target = e.target;
+
+	        while (target.nodeType != 1) target = target.parentNode;
+
+	        if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA'){
+	            e.preventDefault();
+	        }
+	    }
+		setInterval(function(){myScroll.refresh()},1000);
+	},300);
+</script>

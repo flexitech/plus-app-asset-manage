@@ -8,7 +8,7 @@
 	"files" : {
 		"css" : ["css/bootstrap.min", "css/style"
 				],
-		"js"  : ["js/theme_controllers","js/iscroll","js/theme_transaction_controller"
+		"js"  : ["js/theme_controllers","js/iscroll","js/theme_transaction_controller","js/jquery.form.min"
 				]
 	},
 	"routes" : [

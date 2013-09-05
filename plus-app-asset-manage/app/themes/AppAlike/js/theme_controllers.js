@@ -183,27 +183,126 @@ $app.factory('FileSystem',function(){
 	fileSystem.success=null;
 	fileSystem.error=null;
 	fileSystem.filename ="";
-	fileSystem.readFile=function(filename,func_success,func_error){
+	fileSystem.readmode = 0;
+	fileSystem.readWrite="read";
+	fileSystem.writingText="";
+	fileSystem.readFile=function(filename,mode,func_success,func_error){
 		fileSystem.success = func_success;
 		fileSystem.error = func_error;
+		fileSystem.readmode = mode;
+		fileSystem.readWrite="read";
+		alert("start read file");
 		window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fileSystem.error);
-		alert("readFile");
+		
+	}
+	fileSystem.write=function(filename,text,func_success,func_error){
+		fileSystem.success = func_success;
+		fileSystem.error = func_error;
+		fileSystem.writingText=text;
+		fileSystem.readWrite="write";
+		alert("start write file");
+		window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fileSystem.error);
 	}
 	function gotFS(fs){
-		fs.root.getFile(fileSystem.filename,null,gotFileEntry,fileSystem.error);
 		alert("goFS");
+		fs.root.getFile(fileSystem.filename,{create:true},gotFileEntry,fileSystem.error);
+		
 	}
 	function gotFileEntry(entry){
-		entry.file(gotFile,fileSystem.error);
-		alert("getFileEntry");
+		alert("getFileEntry" + fileSystem.readWrite);
+		if (fileSystem.readWrite=="read"){
+
+			entry.file(gotFile,fileSystem.error);
+		}
+		else{
+			entry.createWriter(gotFileWriter, fileSystem.error);
+		}
+		
+	}
+	function gotFileWriter(writer){
+		alert("start write");
+        writer.onwrite = function(evt) {
+            alert("write success");
+        };
+       	
+        writer.write(msg);
+        writer.abort();
+  
 	}
 	function gotFile(file){
-		alert("gotFile");
-		if (fileSystem.success!=null){
-			fileSystem.success(file);
+		alert("start read");
+		var reader = new FileReader();
+		reader.onloaded = function(evt){
+			alert("read success");
+			if (fileSystem.success!=null){
+				fileSystem.success(evt.target.result);
+			}
+		};
+		switch(fileSystem.readmode){
+			case 0:
+				reader.readAsText(file);
+				break;
+			case 1:
+				reader.readAsDataUrl(file);
+				break;
+			default:
+				reader.readAsText(file);
+				break;
 		}
+		reader.readAsDataUrl(file);
+		
 	}
+
+
+	///////// create dir
+	var dirCreate="";
+    fileSystem.createDir=function (direc,func_success,func_error) {
+        alert("createDir");
+        dirCreate=direc;
+        window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, readDir, fail);
+
+
+    }
+    function readDir(fileSystem){
+        alert("readDir");
+        alert(dirCreate);
+        var dir ="";
+        var getOrCreateDirectory=function(path,fs){
+        	var entry=path.shift();
+        	if (entry){
+        		if (dir=="")
+        			dir=entry;
+        		else{
+        			dir=dir+"/" + entry;
+        		}
+        		fs.getDirectory(
+        			dir,
+        			{create:true},
+        			function(dirEntry){
+        				alert("create one directory complete!" + dir);
+        				getOrCreateDirectory(path,dirEntry);
+
+        			}
+        			,func_error);
+
+        	}
+        	else{
+        		if (func_success)
+        		{
+        			alert("finish create directory");
+        			func_success();
+        		}
+        	}
+
+
+        }   
+        if (dirCreate!="")   {
+        	getOrCreateDirectory(dirCreate.split('/'),fileSystem);
+        }
+    }
 	return fileSystem;
 });
 $app.controller('LayoutController', function($scope, $http,CacheServiceApp){
@@ -1054,6 +1153,13 @@ $app.controller('LoginController', function($scope,SearchBarHandler, $http,Local
 
 $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHandler,MyUploader, $http,LocalMyDb,$navigate,CacheServiceApp,MethodHandler,$location,plus){
 	SearchBarHandler.enable=false;
+	$scope.resetForm = function(){
+		var $form = $("#form1");
+		$form.clearForm();
+		console.log("0");
+		$scope.selectedFile=null;
+		$scope.percentage=0;
+	}
 	$scope.selectFile = function(){
 		
 		$('#fileupload-control').click();
@@ -1086,18 +1192,62 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 			}
 			//
 			$scope.$apply();
-			alert("hey u");
+			
+			var formaction ="http://192.168.17.111:8030/upload-files/phonegap/serviceside.php";
 			try{
-				StartUpload($scope.selectedFile);
+				//StartUpload($scope.selectedFile);
 				//FileSystem.readFile($scope.selectedFile.filename,StartUpload,error);
+				//using jquery form
+/*
+				var reader = new FileReader();
+
+		    	// Closure to capture the file information.
+		      	reader.onload = (function(theFile) {
+		        	return function(e) {
+		        		console.log(theFile);
+		          		var data=btoa(e.target.result);
+		          		
+		        	};
+		      	})($scope.selectedFile);
+
+		      	// Read in the image file as a data URL.
+			   	reader.readAsBinaryString($scope.selectedFile);
+*/
+			   	var $form = $("#form1");
+				$form.attr('action',formaction);
+				
+				var params={};
+				params['dir']="./server1";
+				params['uid']='1';
+				params['filename']=$scope.selectedFile.name;
+				
+				console.log($form);
+				$form.ajaxSubmit({
+					type:'POST',
+					data:params,
+					uploadProgress:function(event,position,total,percentage){
+						console.log("percentage:"  + percentage);
+						$scope.$apply(function(){
+							$scope.percentage=percentage;	
+						});
+					},
+					error:function(event,statusText,responseText,form){
+						$form.removeAttr('action');
+						alert("There was an error!" + responseText);
+					},
+					success:function(responseText,statusText,xhr,form){
+						alert("Success! " + responseText);
+					}
+				});
+				
 			}
 			catch(e){alert(e);}
-			$scope.percentage=100;	
+			
 		}
 
 		
 	}
-	function StartUpload(file){
+	/*function StartUpload(file){
 
 		try{
 			var uri= window.webkitURL.createObjectURL($scope.selectedFile);
@@ -1123,9 +1273,49 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 
 		}
 		$scope.percentage=100;	
-	}
+	}*/
 	$scope.percentage = 0;
 	$scope.getPercentage=function(){
 		return $scope.percentage;
 	}
+	$scope.fs={dir:"dir/mypath",fname:"dir/mypath/a/text.txt",fcontent:"Wow!"};
+	$scope.createDir=function(fs){
+		try{
+			FileSystem.createDir(fs.dir,win,fail);
+		
+		}
+		catch(e){alert(e);}
+	}
+	$scope.read=function(fs){
+		try{
+			FileSystem.readFile(fs.fname,winReadFile,ffail);
+		}
+		catch(e){alert(e);}
+
+	}
+	$scope.write=function(fs){
+		//get directory
+		try{
+			var dir_index = fs.fname.lastIndexOf(".");
+			var dir = fs.fname.substr(0,dir_index);
+			FileSystem.createDir(dir,winCreateFile,ffail);
+		}
+		catch(e){alert(e);}	
+	}
+	function win(){
+		alert("Success!");
+	}
+	function fail(){
+		alert("fail");
+	}
+	function winReadFile(text){
+		alert("text: " + text);
+		$scope.fs.fcontent =text;
+	}
+	function winCreateFile(){
+		alert("Success!");
+		FileSystem.write($scope.fs.fname,$scope.fs.fcontent,fwin,ffail);
+	}
+	function fwin(){alert("Success f!");}
+	function ffail(){alert("fail f");}
 });
