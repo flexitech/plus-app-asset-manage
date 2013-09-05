@@ -290,10 +290,10 @@ $app.factory('FileSystem',function(){
 
         	}
         	else{
-        		if (fileSystem.func_success)
+        		if (fileSystem.success)
         		{
         			alert("finish create directory");
-        			fileSystem.func_success();
+        			fileSystem.success();
         		}
         	}
 
