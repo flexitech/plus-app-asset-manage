@@ -176,6 +176,32 @@ $app.factory('MyUploader',function(){
 	}
 	return uploader;
 });
+//////// file system service
+$app.factory('FileSystem',function(){
+	var fileSystem = {};
+	fileSystem.success=null;
+	fileSystem.error=null;
+	fileSystem.filename ="";
+	fileSystem.readFile=function(filename,func_success,func_error){
+		fileSystem.success = func_success;
+		fileSystem.error = func_error;
+		window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+
+	}
+	function gotFS(fs){
+		fs.root.getFile(fileSystem.filename,null,gotFileEntry,fileSystem.error);
+	}
+	function gotFileEntry(entry){
+		entry.file(gotFile,fileSystem.error);
+	}
+	function gotFile(file){
+		if (fileSystem.success!=null){
+			fileSystem.success(file);
+		}
+	}
+	return fileSystem;
+});
 $app.controller('LayoutController', function($scope, $http,CacheServiceApp){
 
   $scope.userLogined = function(){
@@ -1022,7 +1048,7 @@ $app.controller('LoginController', function($scope,SearchBarHandler, $http,Local
 	}
 });
 
-$app.controller('FileUploaderController', function($scope,SearchBarHandler,MyUploader, $http,LocalMyDb,$navigate,CacheServiceApp,MethodHandler,$location,plus){
+$app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHandler,MyUploader, $http,LocalMyDb,$navigate,CacheServiceApp,MethodHandler,$location,plus){
 	SearchBarHandler.enable=false;
 	$scope.selectFile = function(){
 		
@@ -1055,18 +1081,31 @@ $app.controller('FileUploaderController', function($scope,SearchBarHandler,MyUpl
 			}
 			//
 			$scope.$apply();
+			alert("hey u");
 			try{
-				MyUploader.setOptions('file',$scope.selectedFile.filename,$scope.selectedFile.type);
-				MyUploader.setParams({dir:'/server1/',user_id:1});
-				MyUploader.init('http://192.168.17.111:8030/upload-files/phonegap/serviceside.php',
-					$scope.selectedFile.filename,
-					successcallback,errorcallback,progresscallback);
+				FileSystem.readFile($scope.selectedFile.filename,StartUpload,error);
 			}
 			catch(e){alert(e);}
 			$scope.percentage=100;	
 		}
 
 		
+	}
+	function StartUpload(file){
+		console.log(file);
+		return;
+		try{
+			return;
+			MyUploader.setOptions('file',$scope.selectedFile.filename,$scope.selectedFile.type);
+			MyUploader.setParams({dir:'/server1/',user_id:1});
+			MyUploader.init('http://192.168.17.111:8030/upload-files/phonegap/serviceside.php',
+				$scope.selectedFile.filename,
+				successcallback,errorcallback,progresscallback);
+		}
+		catch(e){alert(e);}
+	}
+	function error(evt){
+		alert("error reading file!" + evt.target.error.code);
 	}
 	function successcallback(){alert("success -----------------------");}
 	function errorcallback(){alert("error -----------------------");}
