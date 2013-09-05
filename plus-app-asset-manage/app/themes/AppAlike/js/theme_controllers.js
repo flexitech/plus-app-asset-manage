@@ -268,7 +268,7 @@ $app.factory('FileSystem',function(){
 
 
     }
-    function readDir(fileSystem){
+    function readDir(fsys){
         alert("readDir");
         alert(dirCreate);
         var dir ="";
@@ -276,7 +276,7 @@ $app.factory('FileSystem',function(){
         	var entry=path.shift();
 
         	alert("entry:" + entry);
-        	if (entry){
+        	if (entry!=undefined){
         		
         		fs.getDirectory(
         			entry,
@@ -300,7 +300,7 @@ $app.factory('FileSystem',function(){
 
         }   
         if (dirCreate!="")   {
-        	getOrCreateDirectory(dirCreate.split('/'),fileSystem.root);
+        	getOrCreateDirectory(dirCreate.split('/'),fsys.root);
         }
     }
 	return fileSystem;
