@@ -227,7 +227,7 @@ $app.factory('FileSystem',function(){
             alert("write success");
         };
        	
-        writer.write(msg);
+        writer.write(fileSystem.writingText);
         writer.abort();
   
 	}
