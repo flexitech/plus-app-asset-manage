@@ -1092,10 +1092,8 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 		
 	}
 	function StartUpload(file){
-		console.log(file);
-		return;
+
 		try{
-			return;
 			MyUploader.setOptions('file',$scope.selectedFile.filename,$scope.selectedFile.type);
 			MyUploader.setParams({dir:'/server1/',user_id:1});
 			MyUploader.init('http://192.168.17.111:8030/upload-files/phonegap/serviceside.php',
