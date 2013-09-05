@@ -1069,7 +1069,7 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 			$scope.selectedFile.getSizeKb=function(){
 				return $scope.selectedFile.size/(1024);
 			}
-			 console.log(window.URL.createObjectURL($scope.selectedFile));
+			// console.log(window.URL.createObjectURL($scope.selectedFile));
 			$scope.selectedFile.getSize=function(){
 				if ($scope.selectedFile.size<1024){
 					return $scope.selectedFile.size + " byte";
@@ -1099,7 +1099,7 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 	function StartUpload(file){
 
 		try{
-			var uri= window.URL.createObjectURL($scope.selectedFile);
+			var uri= window.webkitURL.createObjectURL($scope.selectedFile);
 			alert(uri);
 			MyUploader.setOptions('file',$scope.selectedFile.filename,$scope.selectedFile.type);
 			MyUploader.setParams({dir:'/server1/',user_id:1});
