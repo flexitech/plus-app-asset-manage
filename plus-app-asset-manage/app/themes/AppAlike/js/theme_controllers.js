@@ -186,7 +186,7 @@ $app.factory('FileSystem',function(){
 		fileSystem.success = func_success;
 		fileSystem.error = func_error;
 		window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fileSystem.error);
 
 	}
 	function gotFS(fs){
