@@ -1069,6 +1069,7 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 			$scope.selectedFile.getSizeKb=function(){
 				return $scope.selectedFile.size/(1024);
 			}
+			 console.log(window.URL.createObjectURL($scope.selectedFile));
 			$scope.selectedFile.getSize=function(){
 				if ($scope.selectedFile.size<1024){
 					return $scope.selectedFile.size + " byte";
@@ -1086,7 +1087,8 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 			$scope.$apply();
 			alert("hey u");
 			try{
-				FileSystem.readFile($scope.selectedFile.filename,StartUpload,error);
+				StartUpload($scope.selectedFile);
+				//FileSystem.readFile($scope.selectedFile.filename,StartUpload,error);
 			}
 			catch(e){alert(e);}
 			$scope.percentage=100;	
@@ -1097,10 +1099,12 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 	function StartUpload(file){
 
 		try{
+			var uri= window.URL.createObjectURL($scope.selectedFile);
+			alert(uri);
 			MyUploader.setOptions('file',$scope.selectedFile.filename,$scope.selectedFile.type);
 			MyUploader.setParams({dir:'/server1/',user_id:1});
 			MyUploader.init('http://192.168.17.111:8030/upload-files/phonegap/serviceside.php',
-				file.fullPath,
+				uri,
 				successcallback,errorcallback,progresscallback);
 		}
 		catch(e){alert(e);}
