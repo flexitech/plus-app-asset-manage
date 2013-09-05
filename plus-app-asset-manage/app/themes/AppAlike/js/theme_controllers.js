@@ -1289,7 +1289,7 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 	}
 	$scope.read=function(fs){
 		try{
-			FileSystem.readFile(fs.fname,winReadFile,ffail);
+			FileSystem.readFile(fs.fname,0,winReadFile,ffail);
 		}
 		catch(e){alert(e);}
 
