@@ -274,12 +274,15 @@ $app.factory('FileSystem',function(){
         var dir ="";
         var getOrCreateDirectory=function(path,fs){
         	var entry=path.shift();
+
+        	alert("entry:" + entry);
         	if (entry){
         		if (dir=="")
         			dir=entry;
         		else{
         			dir=dir+"/" + entry;
         		}
+        		alert("dir:" + dir);
         		fs.getDirectory(
         			dir,
         			{create:true},
@@ -1298,7 +1301,7 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 	$scope.write=function(fs){
 		//get directory
 		try{
-			var dir_index = fs.fname.lastIndexOf(".");
+			var dir_index = fs.fname.lastIndexOf("/");
 			var dir = fs.fname.substr(0,dir_index);
 			FileSystem.createDir(dir,winCreateFile,ffail);
 		}
