@@ -207,7 +207,7 @@ $app.factory('FileSystem',function(){
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fileSystem.error);
 	}
 	function gotFS(fs){
-		alert("goFS");
+		alert("goFS: " + fileSystem.filename);
 		fs.root.getFile(fileSystem.filename,{create:true},gotFileEntry,fileSystem.error);
 		
 	}
