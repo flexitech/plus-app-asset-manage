@@ -305,7 +305,7 @@ $app.factory('FileSystem',function(){
 
         }   
         if (dirCreate!="")   {
-        	getOrCreateDirectory(dirCreate.split('/'),fileSystem);
+        	getOrCreateDirectory(dirCreate.split('/'),fileSystem.root);
         }
     }
 	return fileSystem;
