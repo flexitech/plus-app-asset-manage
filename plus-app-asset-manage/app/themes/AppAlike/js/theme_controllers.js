@@ -277,17 +277,12 @@ $app.factory('FileSystem',function(){
 
         	alert("entry:" + entry);
         	if (entry){
-        		if (dir=="")
-        			dir=entry;
-        		else{
-        			dir=dir+"/" + entry;
-        		}
-        		alert("dir:" + dir);
+        		
         		fs.getDirectory(
-        			dir,
+        			entry,
         			{create:true},
         			function(dirEntry){
-        				alert("create one directory complete!" + dir);
+        				alert("create one directory complete!" + entry);
         				getOrCreateDirectory(path,dirEntry);
 
         			}
