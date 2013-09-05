@@ -291,7 +291,7 @@ $app.factory('FileSystem',function(){
         				getOrCreateDirectory(path,dirEntry);
 
         			}
-        			,fileSystem.error);
+        			,function(error){alert("error " + error.code)});
 
         	}
         	else{
