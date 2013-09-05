@@ -259,10 +259,12 @@ $app.factory('FileSystem',function(){
 	///////// create dir
 	var dirCreate="";
     fileSystem.createDir=function (direc,func_success,func_error) {
+    	fileSystem.success = func_success;
+		fileSystem.error = func_error;
         alert("createDir");
         dirCreate=direc;
         window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, readDir, fail);
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, readDir, fileSystem.error);
 
 
     }
@@ -286,14 +288,14 @@ $app.factory('FileSystem',function(){
         				getOrCreateDirectory(path,dirEntry);
 
         			}
-        			,func_error);
+        			,fileSystem.error);
 
         	}
         	else{
-        		if (func_success)
+        		if (fileSystem.func_success)
         		{
         			alert("finish create directory");
-        			func_success();
+        			fileSystem.func_success();
         		}
         	}
 
