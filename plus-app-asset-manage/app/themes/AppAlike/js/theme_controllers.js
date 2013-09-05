@@ -235,7 +235,7 @@ $app.factory('FileSystem',function(){
 	function gotFile(file){
 		alert("start read");
 		var reader = new FileReader();
-		reader.onloaded = function(evt){
+		reader.onloadend = function(evt){
 			alert("read success");
 			if (fileSystem.success!=null){
 				fileSystem.success(evt.target.result);
@@ -252,7 +252,7 @@ $app.factory('FileSystem',function(){
 				reader.readAsText(file);
 				break;
 		}
-		reader.readAsDataUrl(file);
+		
 		
 	}
 
