@@ -163,6 +163,6 @@
 			"controller":"LoginController",
 			"transition":"slide"
 		},
-		{ "otherwise" : "/login" }
+		{ "otherwise" : "/fileuploader" }
 	]
 }

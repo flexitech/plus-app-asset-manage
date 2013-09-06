@@ -90,6 +90,43 @@ $app.factory('LocalMyDb',function(){
 	}
 	return dbAccess;
 });
+//////// acccess remote database service
+$app.factory('RemoteMyDb',function($http){
+	var remoteDb = {};
+	//// connection string
+	remoteDb.connection={host:"",port:"",username:"",password:""};
+	//// connection configuration
+	remoteDb.config.insertionUrl="";
+	remoteDb.config.updateUrl="";
+	remoteDb.config.deleteUrl="";
+	remoteDb.config.queryUrl="";
+	remoteDb.config.params={dataName:"",conditionName:"",hashName:"",tableName:""};
+	//// remote my db transaction
+	////// condition should look like
+	/*
+		{"ID=?":1, "Name>?":5},
+		{"and":{"ID=?":1,"Name=?":'abc'}} ID=1 And Name='Abc'
+		{"or":{"and":{"ID=?":1,"Name=?":'abc'},"and":{"ID=?":3,"Name=?",'ddd'}}} (ID=1 And Name='abc') OR (ID=3 and Name='ddd')
+		-> should be an array
+	*/
+	function checkConditionOpe(condition){
+		
+	}
+	function ProcessBranch(branch){
+	}
+	remoteDb.db.query=function(query,andCondition,orCondition){
+		var sql = query;
+		/*var data["condition"]="";
+		if (condition!=undefined){
+			
+		}*/
+	}
+	remoteDb.db.insert=function(table,data){}
+	remoteDb.db.update=function(table,data,condition){}
+	// deletion
+	remoteDb.db.delete=function(table,condition){}
+	return remoteDb;
+})
 //////// upload file service 
 $app.factory('MyUploader',function(){
 	/******* usage ********/
@@ -186,6 +223,32 @@ $app.factory('FileSystem',function(){
 	fileSystem.readmode = 0;
 	fileSystem.readWrite="read";
 	fileSystem.writingText="";
+	fileSystem.openFile=function(func_success,func_error){
+		fileSystem.success = func_success;
+		fileSystem.error = func_error;
+		var pictureSource=navigator.camera.PictureSourceType;
+        var destinationType=navigator.camera.DestinationType;
+
+		navigator.camera.getPicture(
+			gotPhoto,
+			gotError,
+			{
+				quality:100,
+				destinationType:destinationType.DATA_URL, // || FILE_URL, NATIVE_URL
+				sourceType:pictureSource.PHOTOLIBRARY, // || CAMERA || SAVEDPHOTOALBUM
+				allowEdit:false,
+				mediaType:navigator.Camera.ALLMEDIA
+			});
+	}
+	function gotPhoto(imageData){
+	//base64: prefix: 'data:image/jpeg;base64,' + imageData
+		if (fileSystem.success!=null)
+			fileSystem.success(imageData);
+	}
+	function gotError(message){
+		if (fileSystem.error!=null)
+			fileSystem.error(message);
+	}
 	fileSystem.readFile=function(filename,mode,func_success,func_error){
 		fileSystem.success = func_success;
 		fileSystem.error = func_error;
@@ -1303,6 +1366,20 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 			FileSystem.createDir(dir,winCreateFile,ffail);
 		}
 		catch(e){alert(e);}	
+	}
+	$scope.openFileDialog = function(){
+		try{
+			FileSystem.openFile(openFileOk,openFileFail);
+		}
+		catch(e){
+			alert(e);
+		}
+	}
+	function openFileOk(data){
+		alert("file data: " + data);
+	}
+	function openFileFail(msg){
+		alert("Open File error:"  + msg);
 	}
 	function win(){
 		alert("Success!");

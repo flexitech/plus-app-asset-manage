@@ -157,7 +157,7 @@
 	</div>
 </div>
 <script>
-	var myScroll2  = new iScroll('horiz-wrapper',{snap:true,hScrollbar:false});
+	var myScroll2  = new iScroll('horiz-wrapper',{snap:true,hScrollbar:false,snapThreshold:.1, momentum:false});
 	
 	myScroll2.options.onBeforeScrollStart = function(e) {                
         var target = e.target;
