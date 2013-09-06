@@ -1,25 +1,25 @@
-<div ng-controller="LayoutHeaderController" >
-	<div class="navbar-inner"  >
-		<div class="container-fluid"  hm-drag-down="showSearch('.search-box button');" hm-swipe-left="hide('.button-back');" hm-swipe-right="show('.button-back');checkUserLogin();">
-			
-				<button hm-tap="checkUserLogin();" data-cur="hide" id="button-back" class="button-back button-nav-bar back btn "><span class="glyphicon glyphicon-list"></span> Menu</button>
-				<span class="pnavbar-brand" href="#">{{pageTitle}}</span>
-				<span id="button-menu-group-right" ng-show="getMethodHandler().show">
-					<button id="" class="button-nav-bar blue btn go " hm-tap="getMethodHandler().func();">{{getMethodHandler().text}} <span ng-class="getMethodHandler().icon_class"></span>
-					</button>
-				</span>
-		</div>
+<div class="navbar-inner"  ng-controller="LayoutHeaderController" >
+	<!-- <div style="" > -->.
+	<div class="search-box " style="">
+		<input type="text" style="" placeholder="Search" ng-change="getSearchBarHandler().onSubmit()" ng-model="getSearchBarHandler().searchText"/><button data-cur="hide" class="btn btn-info">X</button>
+	</div>
+	<div class="container-fluid"  style="width:100%;left:0px;position:relative;top:-20px;"  hm-drag-down="showSearch('.search-box button');" hm-swipe-left="hide('.button-back');" hm-swipe-right="show('.button-back');checkUserLogin();">
+		
+			<button hm-tap="checkUserLogin();" data-cur="hide" id="button-back" class="button-back button-nav-bar back btn "><span class="glyphicon glyphicon-list"></span> Menu</button>
+			<span class="pnavbar-brand" href="#">{{pageTitle}}</span>
+			<span id="button-menu-group-right" ng-show="getMethodHandler().show">
+				<button id="" class="button-nav-bar blue btn go " hm-tap="getMethodHandler().func();">{{getMethodHandler().text}} <span ng-class="getMethodHandler().icon_class"></span>
+				</button>
+			</span>
+	</div>
 			
 			
 		 
 		    
 		   
 			
-	</div>
+	<!-- </div> -->
 	<div class="clear"></div>
-	<div class="search-box " style="">
-		<input type="text" style="" placeholder="Search" ng-change="getSearchBarHandler().onSubmit()" ng-model="getSearchBarHandler().searchText"/><button data-cur="hide" class="btn btn-info">X</button>
-	</div>
 </div>
 <ng-include src="app.paths.element('plus.ui')"></ng-include>
 <script>

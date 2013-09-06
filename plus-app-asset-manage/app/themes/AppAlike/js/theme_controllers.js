@@ -1313,6 +1313,7 @@ $app.controller('FileUploaderController', function($scope,FileSystem,SearchBarHa
 	function winReadFile(text){
 		alert("text: " + text);
 		$scope.fs.fcontent =text;
+		$scope.$apply();
 	}
 	function winCreateFile(){
 		alert("Success!");
